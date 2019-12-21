@@ -13,25 +13,15 @@ class Solution(object):
         """
         result = 0
         head = 0
-        if not s:  # incase of empty string
-            return result
-        seen = {s[head]: head}
-        
-        tail = head + 1
-        size = len(s)
-        while head <= size:
-            while tail < size and s[tail] not in seen:
-                seen[s[tail]] = tail
-                tail += 1
-            candidate = len(seen)
-            if candidate > result:
-                result = candidate  # temp result
-            if tail == size:
-                break
-            head = seen[s[tail]] + 1
-            tail = head + 1
-            seen = {s[head]: head}  # clear cache
+        seen = {}
+        for tail in xrange(len(s)):
+            ch = s[tail]
+            if ch in seen:
+                head = max(head, seen[ch])
+            result = max(result, tail - head + 1)
+            seen[ch] = tail + 1
 
         return result
+
 # @lc code=end
 
