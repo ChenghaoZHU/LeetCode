@@ -1,2 +1,2 @@
 # LeetCode
-Practise on leetcode
+Practise on leetcode using Python 2.7
