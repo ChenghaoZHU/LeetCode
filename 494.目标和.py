@@ -22,12 +22,12 @@ class Solution(object):
         if (size, S - n) in cache:
             x = cache[(size, S - n)]
         else:
-            x = self.bfs(nums[1:], S - n)
+            x = self.dfs(nums[1:], S - n)
             cache[(size, S - n)] = x
         if (size, S + n) in cache:
             y = cache[(size, S + n)]
         else:
-            y = self.bfs(nums[1:], S + n)
+            y = self.dfs(nums[1:], S + n)
             cache[(size, S + n)] = y
 
         return x + y
@@ -39,7 +39,7 @@ class Solution(object):
         :rtype: int
         """
         self.cache = {}
-        return self.bfs(nums, S)
+        return self.dfs(nums, S)
 
 # @lc code=end
 
