@@ -11,33 +11,30 @@ class Solution(object):
         :type nums: List[int]
         :rtype: None Do not return anything, modify nums in-place instead.
         """
-        def helper(p):
-            while p > 1:
-                if nums[p] > nums[p - 1]:
-                    nums[p], nums[p - 1] = nums[p - 1], nums[p]
-                    while p < len(nums) - 1:
-                        if nums[p] < nums[p + 1]:
-                            nums[p], nums[p + 1] = nums[p + 1], nums[p]
-                        p += 1
-                    return True
-                p -= 1
-            return False
-        
-        p = len(nums) - 1
-        while p > 1:
-            if helper(p): return
-            p -= 1
-        l, r = 1, len(nums) - 1
-        while l < r:
-            nums[l], nums[r] = nums[r], nums[l]
-            l += 1
-            r -= 1
-        for i in xrange(1, len(nums)):
-            if nums[i] > nums[0]:
-                nums[0], nums[i] = nums[i], nums[0]
-                return
-        nums.append(nums.pop(0))
+        # 寻找最后的升序
+        def helper(idx):
+            i = idx - 1
+            for i in xrange(idx - 1, -1, -1):
+                if nums[idx] > nums[i]:
+                    return i
+            return -1
 
+        l, r = 0, len(nums) - 1
+        best_l = -1
+        best_r = len(nums)
+        while l < r:
+            found = helper(r)
+            if found != -1:
+                if found > best_l and r < best_r:
+                    best_l = found
+                    best_r = r
+                    l = best_l
+            r -= 1
+        if best_l != -1:
+            nums[best_l], nums[best_r] = nums[best_r], nums[best_l]
+            nums[best_l + 1:] = sorted(nums[best_l + 1:])
+        else:
+            nums.sort()
 
 # @lc code=end
 
